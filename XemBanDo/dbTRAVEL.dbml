@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="TRAVEL" Class="dbTRAVELDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=TRAVEL;Integrated Security=True" SettingsObjectName="XemBanDo.Properties.Settings" SettingsPropertyName="TRAVELConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Tua" Member="Tuas">
+    <Type Name="Tua">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TenTua" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="DatNuoc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDDanhMuc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Gia" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="KhachSan" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="NgayDen" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="NgayDi" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="DaDat" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MaTua" Type="System.String" DbType="NVarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Tua_HoaDon" Member="HoaDons" ThisKey="MaTua" OtherKey="MaTua" Type="HoaDon" />
+      <Association Name="DanhMuc_Tua" Member="DanhMuc" ThisKey="IDDanhMuc" OtherKey="ID" Type="DanhMuc" IsForeignKey="true" />
+      <Association Name="Country_Tua" Member="Country" ThisKey="DatNuoc" OtherKey="Id" Type="Country" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TheNap" Member="TheNaps">
+    <Type Name="TheNap">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MaTheNap" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="GiaThe" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="DaSuDung" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SoSeri" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HoaDon" Member="HoaDons">
+    <Type Name="HoaDon">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MaTua" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="GiaTua" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="TenTaiKhoan" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="NgayDat" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="Tua_HoaDon" Member="Tua" ThisKey="MaTua" OtherKey="MaTua" Type="Tua" IsForeignKey="true" />
+      <Association Name="Account_HoaDon" Member="Account" ThisKey="TenTaiKhoan" OtherKey="TenTaiKhoan" Type="Account" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DanhMuc" Member="DanhMucs">
+    <Type Name="DanhMuc">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TenDanhMuc" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="DanhMuc_Tua" Member="Tuas" ThisKey="ID" OtherKey="IDDanhMuc" Type="Tua" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Country" Member="Countries">
+    <Type Name="Country">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CountryCode" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CommonName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="FormalName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="CountryType" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Capital" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="TelephoneCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="InternetCountryCode" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="Country_Tua" Member="Tuas" ThisKey="Id" OtherKey="DatNuoc" Type="Tua" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Account" Member="Accounts">
+    <Type Name="Account">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TenTaiKhoan" Type="System.String" DbType="NVarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MatKhau" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="IsAdmin" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Tien" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Association Name="Account_HoaDon" Member="HoaDons" ThisKey="TenTaiKhoan" OtherKey="TenTaiKhoan" Type="HoaDon" />
+    </Type>
+  </Table>
+</Database>
